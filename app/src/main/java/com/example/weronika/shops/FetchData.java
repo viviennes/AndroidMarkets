@@ -2,6 +2,8 @@ package com.example.weronika.shops;
 
 import android.os.AsyncTask;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,6 +57,8 @@ public class FetchData extends AsyncTask<String, Void, Void> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ObjectMapper objectMapper = new ObjectMapper();
 
         return null;
     }

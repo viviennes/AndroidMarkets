@@ -10,13 +10,14 @@
         android:id="@+id/countries_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/selected_country"
-        android:layout_below="@id/countries_spinner"
-        android:layout_width="match_parent"
+    <ListView
+        android:id="@+id/markets_list_view"
         android:layout_height="match_parent"
-        android:text="Weronika"
-        android:layout_margin="20dp"/>
+        android:layout_width="match_parent"
+        android:layout_below="@+id/countries_spinner"
+        android:layout_margin="10dp">
+
+    </ListView>
+
 
 </RelativeLayout>

@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Random;
-import java.util.UUID;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    public static TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,12 +33,29 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        textView = findViewById(R.id.selected_country);
         Spinner spinner = findViewById(R.id.countries_spinner);
-        FetchData fetchData = new FetchData();
-        fetchData.execute(spinner.getSelectedItem().toString());
+        ListView listView = findViewById(R.id.markets_list_view);
+        Connection connection = new Connection();
+        try {
+            connection.execute(spinner.getSelectedItem().toString()).get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        if(connection.fetchData != null){
+            List<Market> marketList = connection.fetchData.getMarkets();
+
+            if (marketList.size() > 0) {
+                Collections.sort(marketList, (object1, object2) -> object1.getInstrumentName().compareTo(object2.getInstrumentName()));
+            }
+
+            ListArrayAdapter listArrayAdapter = new ListArrayAdapter(this, marketList);
+            listView.setAdapter(listArrayAdapter);
+        }
 
     }
+
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {

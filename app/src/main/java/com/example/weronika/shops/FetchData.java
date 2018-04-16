@@ -10,7 +10,7 @@ public class FetchData {
 
     private List<Market> markets;
     private String chartFormat;
-    private  String lightstreamerEndpoint;
+    private String lightstreamerEndpoint;
     private String configuration;
 
     public FetchData() {

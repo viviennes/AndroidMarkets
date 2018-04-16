@@ -15,36 +15,31 @@ import java.net.URL;
 
 public class Connection extends AsyncTask<String, Void, Void> {
 
-    private String data = "";
     private FetchData fetchData;
 
     public FetchData getFetchData() {
         return fetchData;
     }
 
-    public void setFetchData(FetchData fetchData) {
-        this.fetchData = fetchData;
-    }
-
     @Override
     protected Void doInBackground(String... strings) {
-        String country = strings[0];
-        String urlName = "https://api.ig.com/deal/samples/markets/ANDROID_PHONE/";
-        switch (country) {
 
-            case "DE":
-                urlName += "de_DE/dem";
-                break;
-            case "FR":
-                urlName += "fr_FR/frm";
-                break;
-            case "UK":
-            default:
-                urlName += "en_GB/igi";
-                break;
+        String country = strings[0];
+        String urlName = setURL(country);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            fetchData = objectMapper.readValue(getData(urlName), FetchData.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        return null;
+    }
 
+    private String getData(String urlName){
+
+        String data = "";
 
         try {
             URL url = new URL(urlName);
@@ -57,22 +52,31 @@ public class Connection extends AsyncTask<String, Void, Void> {
                 line = bufferedReader.readLine();
                 data += line;
             }
-
         } catch (MalformedURLException e ) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
+        return data;
+    }
 
-        try {
-            fetchData = objectMapper.readValue(data, FetchData.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+    private String setURL(String country){
+        String urlName = "https://api.ig.com/deal/samples/markets/ANDROID_PHONE/";
+
+        switch (country) {
+            case "DE":
+                urlName += "de_DE/dem";
+                break;
+            case "FR":
+                urlName += "fr_FR/frm";
+                break;
+            case "UK":
+            default:
+                urlName += "en_GB/igi";
+                break;
         }
-
-        return null;
+        return urlName;
     }
 
     @Override

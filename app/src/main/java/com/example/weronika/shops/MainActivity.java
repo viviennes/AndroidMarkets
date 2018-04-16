@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_main);
         setContentView(R.layout.activity_main);
         Spinner spinner = findViewById(R.id.countries_spinner);
@@ -37,18 +36,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
         Spinner spinner = findViewById(R.id.countries_spinner);
         ListView listView = findViewById(R.id.markets_list_view);
 
+        //if no connection show popup
         if(!isConnected(MainActivity.this))
             buildDialog(MainActivity.this).show();
-
 
         Connection connection = new Connection();
         try {
@@ -59,16 +56,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
         if(connection.getFetchData() != null){
+            //get list of markets to sort
             List<Market> marketList = connection.getFetchData().getMarkets();
-
             if (marketList.size() > 0) {
                 Collections.sort(marketList, (object1, object2) -> object1.getInstrumentName().compareTo(object2.getInstrumentName()));
             }
-
             ListArrayAdapter listArrayAdapter = new ListArrayAdapter(this, marketList);
             listView.setAdapter(listArrayAdapter);
         }
-
     }
 
 
@@ -77,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    // check if wifi or data network is enabled
     public boolean isConnected(Context context) {
 
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -95,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             return false;
     }
 
+    // create dialog
     public AlertDialog.Builder buildDialog(Context c) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);

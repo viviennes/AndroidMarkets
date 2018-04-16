@@ -12,14 +12,19 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-/**
- * Created by Weronika on 14.04.2018.
- */
 
 public class Connection extends AsyncTask<String, Void, Void> {
 
-    String data = "";
-    FetchData fetchData;
+    private String data = "";
+    private FetchData fetchData;
+
+    public FetchData getFetchData() {
+        return fetchData;
+    }
+
+    public void setFetchData(FetchData fetchData) {
+        this.fetchData = fetchData;
+    }
 
     @Override
     protected Void doInBackground(String... strings) {
@@ -40,6 +45,7 @@ public class Connection extends AsyncTask<String, Void, Void> {
         }
 
 
+
         try {
             URL url = new URL(urlName);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -52,8 +58,7 @@ public class Connection extends AsyncTask<String, Void, Void> {
                 data += line;
             }
 
-        } catch (MalformedURLException e) {
-            //TODO zrobic z tym porządek
+        } catch (MalformedURLException e ) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();

@@ -6,16 +6,46 @@
     android:layout_height="match_parent"
     tools:context="com.example.weronika.shops.MainActivity">
 
+    <View android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@id/strut"
+        android:padding="25dp"
+        android:text="@string/spinner_header" />
+
     <Spinner
         android:id="@+id/countries_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        style="@android:style/Widget.Holo.Light.Spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/strut"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="10dp"
+        android:minHeight="30dp"
+        android:padding="20dp" />
+
+    <TextView
+        android:id="@+id/list_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/list_header"
+        android:padding="25dp"
+        android:layout_below="@+id/countries_spinner"
+        android:layout_centerHorizontal="true"/>
+
     <ListView
         android:id="@+id/markets_list_view"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_below="@+id/countries_spinner"
-        android:layout_margin="10dp">
+        android:layout_below="@+id/list_header"
+        android:layout_margin="10dp"
+        >
 
     </ListView>
 
